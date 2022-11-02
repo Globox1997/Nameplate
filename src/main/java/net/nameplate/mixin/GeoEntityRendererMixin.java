@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -36,6 +37,12 @@ public abstract class GeoEntityRendererMixin<T extends LivingEntity> extends Ent
         if (entity instanceof MobEntity)
             return false;
         return super.hasLabel(entity);
+    }
+
+    @Inject(method = "shouldShowName", at = @At(value = "RETURN", ordinal = 1), cancellable = true, remap = false)
+    private void shouldShowNameMixin(T animatable, CallbackInfoReturnable<Boolean> info) {
+        if (animatable instanceof MobEntity)
+            info.setReturnValue(false);
     }
 
     @Shadow(remap = false)
