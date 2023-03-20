@@ -22,9 +22,7 @@ public class NameplateMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if (!FabricLoader.getInstance().isModLoaded("geckolib3") && mixinClassName.contains("GeoEntityRendererMixin"))
-            return false;
-        if (!FabricLoader.getInstance().isModLoaded("geckolib3") && mixinClassName.contains("GeoReplacedEntityRendererMixin"))
+        if ((mixinClassName.contains("GeoEntityRendererMixin") || mixinClassName.contains("GeoReplacedEntityRendererMixin")) && !FabricLoader.getInstance().isModLoaded("geckolib3"))
             return false;
 
         return true;
