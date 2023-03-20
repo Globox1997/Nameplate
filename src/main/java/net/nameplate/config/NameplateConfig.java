@@ -12,17 +12,23 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class NameplateConfig implements ConfigData {
 
-    @Comment("Calculates Level: Real HP / Old HP * multiplier - multiplier + 1")
-    public int levelMultiplier = 15;
+    @Comment("Calculates Level: Real HP / Old HP * multiplier - multiplier + 1\nIf RpgDifficulty installed: Real HP / Old HP = Health Modificator")
+    public int levelMultiplier = 10;
     @Comment("0xAARRGGBB Format")
     public int nameColor = 553648127;
     public int backgroundColor = -1;
     public float backgroundOpacity = 0.4F;
+    @Comment("Added onto the mob height")
+    public float nameplateHeight = 0.5F;
+    @Comment("Smaller float will increase size")
+    public float nameplateSize = -0.025f;
     public boolean showHealth = false;
     @Comment("Setting if for example WTHIT is installed")
     public boolean showLevel = true;
     public boolean showHostileOnly = false;
     public double squaredDistance = 128.0D;
+    @Comment("Might increase performance when true")
+    public boolean showNameplateIfObstructed = false;
 
     @ConfigEntry.Gui.RequiresRestart
     @Comment("Example: minecraft:zombie or adventurez:brown_fungus")

@@ -22,10 +22,14 @@ public class NameplateRender {
             TextRenderer textRenderer, boolean isVisible, int i) {
         if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance && !mobEntity.hasPassengers())
             if (isVisible && ((MobEntityAccess) mobEntity).showMobRpgLabel()) {
+                if (!Nameplate.CONFIG.showNameplateIfObstructed && !MinecraftClient.getInstance().player.canSee(mobEntity)) {
+                    return;
+                }
                 matrices.push();
-                matrices.translate(0.0D, (double) mobEntity.getHeight() + 0.5F, 0.0D);
+                matrices.translate(0.0D, (double) mobEntity.getHeight() + Nameplate.CONFIG.nameplateHeight, 0.0D);
                 matrices.multiply(dispatcher.getRotation());
-                matrices.scale(-0.025F, -0.025F, 0.025F);
+                matrices.scale(Nameplate.CONFIG.nameplateSize, Nameplate.CONFIG.nameplateSize, 0.025F);
+
                 Matrix4f matrix4f = matrices.peek().getPositionMatrix();
                 float o = dispatcher.gameOptions.getTextBackgroundOpacity(Nameplate.CONFIG.backgroundOpacity);
                 int j = (int) (o * 255.0F) << 24;

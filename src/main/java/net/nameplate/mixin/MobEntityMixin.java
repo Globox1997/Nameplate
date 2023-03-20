@@ -1,6 +1,7 @@
 package net.nameplate.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,13 +16,16 @@ import net.nameplate.access.MobEntityAccess;
 @Mixin(MobEntity.class)
 public class MobEntityMixin implements MobEntityAccess {
 
+    @Unique
     private int mobRpgLevel = 1;
+    @Unique
     private boolean showMobRpgLabel = true;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initMixin(EntityType<? extends MobEntity> entityType, World world, CallbackInfo info) {
-        if (Nameplate.CONFIG.excludedEntities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":")))
+        if (Nameplate.CONFIG.excludedEntities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":"))) {
             this.showMobRpgLabel = false;
+        }
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
@@ -33,7 +37,7 @@ public class MobEntityMixin implements MobEntityAccess {
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void readCustomDataFromNbtMixin(NbtCompound nbt, CallbackInfo info) {
         this.mobRpgLevel = nbt.getInt("MobRpgLevel");
-        this.showMobRpgLabel = nbt.getBoolean("HasMobRpgLabel");
+        this.showMobRpgLabel = nbt.contains("HasMobRpgLabel") ? nbt.getBoolean("HasMobRpgLabel") : true;
     }
 
     @Override
