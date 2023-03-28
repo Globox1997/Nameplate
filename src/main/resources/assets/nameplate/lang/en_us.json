@@ -16,7 +16,9 @@
 
     "text.nameplate.health": "HP: %d/%d",
     "text.nameplate.level": "§eLv.%s§r %s",
+    "text.nameplate.jade.level": " §eLv.%s",
 
     "config.waila.plugin_nameplate": "Nameplate",
-    "config.waila.plugin_nameplate.mob_level_info": "Mob Level Info"
+    "config.waila.plugin_nameplate.mob_level_info": "Mob Level Info",
+    "config.jade.plugin_nameplate.mob_level_info": "Mob Level Info"
 }

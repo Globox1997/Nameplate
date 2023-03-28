@@ -21,6 +21,9 @@
     ],
     "modmenu": [
       "net.nameplate.config.ModMenuIntegration"
+    ],
+    "jade": [
+      "net.nameplate.waila.NameplateJadePlugin"
     ]
   },
   "mixins": [

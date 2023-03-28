@@ -16,6 +16,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.bai.lol" }
 	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+	maven { url "https://www.cursemaven.com" }
 }
 
 dependencies {
@@ -40,6 +41,10 @@ dependencies {
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
 	// GeckoLib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${geckolib_version}"
+	// Jade
+	modCompileOnly ('curse.maven:jade-324717:4328558') {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 processResources {
