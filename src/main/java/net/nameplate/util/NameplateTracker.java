@@ -17,19 +17,7 @@ public class NameplateTracker {
     public static void startTracking(MobEntity mobEntity, ServerPlayerEntity serverPlayer) {
         // Send packet if entity should show
         if (((MobEntityAccess) mobEntity).showMobRpgLabel()) {
-            int level = 1;
-
-            // Calculate mob level
-            if (Nameplate.isRpgDifficultyLoaded) {
-                level = (int) (Nameplate.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - Nameplate.CONFIG.levelMultiplier);
-
-            } else if (DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()) != null) {
-                level = (int) (Nameplate.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
-                        / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - Nameplate.CONFIG.levelMultiplier + 1;
-            }
-            if (level < 1) {
-                level = 1;
-            }
+            int level = getMobLevel(mobEntity);
 
             ((MobEntityAccess) mobEntity).setMobRpgLevel(level);
 
@@ -39,5 +27,20 @@ public class NameplateTracker {
             data.writeBoolean(((MobEntityAccess) mobEntity).showMobRpgLabel());
             ServerPlayNetworking.send(serverPlayer, MobLevelPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
         }
+    }
+
+    public static int getMobLevel(MobEntity mobEntity) {
+        int level = 1;
+        if (Nameplate.isRpgDifficultyLoaded) {
+            level = (int) (Nameplate.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - Nameplate.CONFIG.levelMultiplier);
+
+        } else if (DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()) != null) {
+            level = (int) (Nameplate.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                    / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - Nameplate.CONFIG.levelMultiplier + 1;
+        }
+        if (level < 1) {
+            level = 1;
+        }
+        return level;
     }
 }
