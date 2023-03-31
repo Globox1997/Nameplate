@@ -14,11 +14,10 @@ import net.minecraft.util.math.Matrix4f;
 import net.nameplate.Nameplate;
 import net.nameplate.access.MobEntityAccess;
 
-@SuppressWarnings("rawtypes")
 @Environment(EnvType.CLIENT)
 public class NameplateRender {
 
-    public static void renderNameplate(EntityRenderer entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
+    public static void renderNameplate(EntityRenderer<?> entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
             TextRenderer textRenderer, boolean isVisible, int i) {
         if (MinecraftClient.isHudEnabled() && Nameplate.CONFIG.showLevel && dispatcher.getSquaredDistanceToCamera(mobEntity) <= Nameplate.CONFIG.squaredDistance && !mobEntity.hasPassengers())
             if (isVisible && ((MobEntityAccess) mobEntity).showMobRpgLabel()) {
