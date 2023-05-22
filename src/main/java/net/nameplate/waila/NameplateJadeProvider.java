@@ -2,7 +2,7 @@ package net.nameplate.waila;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.nameplate.Nameplate;
+import net.nameplate.NameplateClient;
 import net.nameplate.access.MobEntityAccess;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
@@ -15,7 +15,7 @@ public enum NameplateJadeProvider implements IEntityComponentProvider {
 
     @Override
     public Identifier getUid() {
-        return Nameplate.MOB_LEVEL_INFO;
+        return NameplateClient.MOB_LEVEL_INFO;
     }
 
     @Override

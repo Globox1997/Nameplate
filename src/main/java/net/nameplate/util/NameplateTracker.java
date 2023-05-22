@@ -7,9 +7,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.nameplate.Nameplate;
+import net.nameplate.NameplateClient;
+import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
-import net.nameplate.network.MobLevelPacket;
+import net.nameplate.network.NameplateServerPacket;
 import net.rpgdifficulty.access.EntityAccess;
 
 public class NameplateTracker {
@@ -25,18 +26,19 @@ public class NameplateTracker {
             data.writeVarInt(level);
             data.writeVarInt(mobEntity.getId());
             data.writeBoolean(((MobEntityAccess) mobEntity).showMobRpgLabel());
-            ServerPlayNetworking.send(serverPlayer, MobLevelPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
+            ServerPlayNetworking.send(serverPlayer, NameplateServerPacket.SET_MOB_LEVEL, new PacketByteBuf(data));
         }
     }
 
     public static int getMobLevel(MobEntity mobEntity) {
         int level = 1;
-        if (Nameplate.isRpgDifficultyLoaded) {
-            level = (int) (Nameplate.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - Nameplate.CONFIG.levelMultiplier);
+        if (NameplateMain.isRpgDifficultyLoaded) {
+            level = (int) (NameplateClient.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - NameplateClient.CONFIG.levelMultiplier);
 
         } else if (DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()) != null) {
-            level = (int) (Nameplate.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
-                    / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - Nameplate.CONFIG.levelMultiplier + 1;
+            level = (int) (NameplateClient.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                    / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - NameplateClient.CONFIG.levelMultiplier
+                    + 1;
         }
         if (level < 1) {
             level = 1;

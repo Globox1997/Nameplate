@@ -13,6 +13,7 @@
     "text.autoconfig.nameplate.option.excludedEntities": "Excluded Entities",
     "text.autoconfig.nameplate.option.nameplateHeight": "Nameplate Height",
     "text.autoconfig.nameplate.option.nameplateSize": "Nameplate Size",
+    "text.autoconfig.nameplate.option.levelTitle": "Level Title",
 
     "text.nameplate.health": "HP: %d/%d",
     "text.nameplate.level": "§eLv.%s§r %s",

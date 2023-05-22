@@ -29,6 +29,8 @@ public class NameplateConfig implements ConfigData {
     public double squaredDistance = 128.0D;
     @Comment("Might increase performance when true")
     public boolean showNameplateIfObstructed = false;
+    @Comment("Travelers title compat")
+    public boolean levelTitle = true;
 
     @ConfigEntry.Gui.RequiresRestart
     @Comment("Example: minecraft:zombie or adventurez:brown_fungus")

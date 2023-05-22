@@ -16,8 +16,11 @@
   "icon": "assets/nameplate/icon.png",
   "environment": "*",
   "entrypoints": {
+    "main": [
+      "net.nameplate.NameplateMain"
+    ],
     "client": [
-      "net.nameplate.Nameplate"
+      "net.nameplate.NameplateClient"
     ],
     "modmenu": [
       "net.nameplate.config.ModMenuIntegration"

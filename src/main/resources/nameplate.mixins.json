@@ -11,7 +11,8 @@
   "client": [
     "MobEntityRendererMixin",
     "GeoEntityRendererMixin",
-    "GeoReplacedEntityRendererMixin"
+    "GeoReplacedEntityRendererMixin",
+    "TitleRenderManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
