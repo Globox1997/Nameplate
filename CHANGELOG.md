@@ -1,6 +1,6 @@
 ### Added:
-- Added travelers title compat
+- 
 ### Fixed:
 - 
 ### Changed:
-- 
+- Moved to main initializer

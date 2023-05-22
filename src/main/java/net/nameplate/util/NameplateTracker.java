@@ -7,7 +7,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.nameplate.NameplateClient;
 import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
 import net.nameplate.network.NameplateServerPacket;
@@ -33,12 +32,11 @@ public class NameplateTracker {
     public static int getMobLevel(MobEntity mobEntity) {
         int level = 1;
         if (NameplateMain.isRpgDifficultyLoaded) {
-            level = (int) (NameplateClient.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - NameplateClient.CONFIG.levelMultiplier);
+            level = (int) (NameplateMain.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - NameplateMain.CONFIG.levelMultiplier);
 
         } else if (DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()) != null) {
-            level = (int) (NameplateClient.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
-                    / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - NameplateClient.CONFIG.levelMultiplier
-                    + 1;
+            level = (int) (NameplateMain.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
+                    / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - NameplateMain.CONFIG.levelMultiplier + 1;
         }
         if (level < 1) {
             level = 1;

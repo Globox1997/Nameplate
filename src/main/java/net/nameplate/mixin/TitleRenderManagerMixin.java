@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.nameplate.NameplateClient;
+import net.nameplate.NameplateMain;
 import net.nameplate.network.NameplateClientPacket;
 
 @Environment(EnvType.CLIENT)
@@ -36,7 +36,7 @@ public class TitleRenderManagerMixin {
     @Inject(method = "updateBiomeTitle", at = @At(value = "INVOKE", target = "Lcom/yungnickyoung/minecraft/travelerstitles/render/TitleRenderer;addRecentEntry(Ljava/lang/Object;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
     private void updateBiomeTitleMixin(World world, BlockPos playerPos, PlayerEntity player, boolean isPlayerUnderground, CallbackInfo info, RegistryEntry<?> biomeHolder, boolean isUndergroundBiome,
             Identifier biomeBaseKey, String overrideBiomeNameKey, String normalBiomeNameKey, Text biomeTitle) {
-        if (NameplateClient.CONFIG.levelTitle) {
+        if (NameplateMain.CONFIG.levelTitle) {
             NameplateClientPacket.writeC2STravelerCompatPacket();
         }
     }

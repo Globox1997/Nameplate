@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import net.nameplate.NameplateClient;
+import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
 
 @Mixin(MobEntity.class)
@@ -23,7 +23,7 @@ public class MobEntityMixin implements MobEntityAccess {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initMixin(EntityType<? extends MobEntity> entityType, World world, CallbackInfo info) {
-        if (NameplateClient.CONFIG.excludedEntities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":"))) {
+        if (NameplateMain.CONFIG.excludedEntities.contains(((MobEntity) (Object) this).getType().toString().replace("entity.", "").replace(".", ":"))) {
             this.showMobRpgLabel = false;
         }
     }
