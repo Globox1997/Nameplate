@@ -31,6 +31,7 @@ public class NameplateConfig implements ConfigData {
     public boolean showNameplateIfObstructed = false;
     @Comment("Travelers title compat")
     public boolean levelTitle = true;
+    public boolean healthBar = false;
 
     @ConfigEntry.Gui.RequiresRestart
     @Comment("Example: minecraft:zombie or adventurez:brown_fungus")

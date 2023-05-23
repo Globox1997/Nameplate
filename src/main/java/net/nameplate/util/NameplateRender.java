@@ -1,21 +1,27 @@
 package net.nameplate.util;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
 
 @Environment(EnvType.CLIENT)
 public class NameplateRender {
+
+    private static final Identifier ICONS = new Identifier("nameplate:textures/icons.png");
 
     public static void renderNameplate(EntityRenderer<?> entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
             TextRenderer textRenderer, boolean isVisible, int i) {
@@ -28,6 +34,37 @@ public class NameplateRender {
                 matrices.translate(0.0D, (double) mobEntity.getHeight() + NameplateMain.CONFIG.nameplateHeight, 0.0D);
                 matrices.multiply(dispatcher.getRotation());
                 matrices.scale(NameplateMain.CONFIG.nameplateSize, NameplateMain.CONFIG.nameplateSize, 0.025F);
+
+                if (NameplateMain.CONFIG.healthBar) {
+                    matrices.push();
+                    matrices.scale(1.5f, 1.5f, 1f);
+
+                    RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                    RenderSystem.enableBlend();
+
+                    RenderSystem.defaultBlendFunc();
+                    RenderSystem.enableDepthTest();
+
+                    RenderSystem.enablePolygonOffset();
+                    RenderSystem.polygonOffset(3.0F, 3.0F);
+
+                    RenderSystem.setShaderTexture(0, ICONS);
+
+                    DrawableHelper.drawTexture(matrices, -20, 0, 0, 0, 40, 6, 256, 256);
+
+                    float health = mobEntity.getHealth() / mobEntity.getMaxHealth();
+                    matrices.translate(0.0D, 0.0D, -0.01D);
+                    DrawableHelper.drawTexture(matrices, -20, 0, 0, 6, Math.round(40 * health), 6, 256, 256);
+
+                    RenderSystem.polygonOffset(0.0F, 0.0F);
+                    RenderSystem.disablePolygonOffset();
+
+                    matrices.pop();
+                    matrices.translate(0.0D, -9D, 0.0D);
+                    RenderSystem.disableBlend();
+
+                    RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                }
 
                 Matrix4f matrix4f = matrices.peek().getPositionMatrix();
                 float o = dispatcher.gameOptions.getTextBackgroundOpacity(NameplateMain.CONFIG.backgroundOpacity);
