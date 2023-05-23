@@ -1,6 +1,6 @@
 ### Added:
-- 
+- Added optional healthbar
 ### Fixed:
 - 
 ### Changed:
-- Moved to main initializer
+- 
