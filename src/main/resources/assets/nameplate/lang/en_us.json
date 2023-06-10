@@ -17,7 +17,8 @@
     "text.autoconfig.nameplate.option.healthBar": "Health Bar",
 
     "text.nameplate.health": "HP: %d/%d",
-    "text.nameplate.level": "§eLv.%s§r %s",
+    "text.nameplate.level": "§eLv.%s",
+    "text.nameplate.name": "§r%s",
     "text.nameplate.jade.level": " §eLv.%s",
 
     "config.waila.plugin_nameplate": "Nameplate",

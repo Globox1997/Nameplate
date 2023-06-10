@@ -35,7 +35,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 	// RpgDifficulty
-	modCompileOnly ('maven.modrinth:rpgdifficulty:1.3.11+1.19.2'){
+	modCompileOnly ('maven.modrinth:rpgdifficulty:1.3.12+1.20'){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Wthit
@@ -43,12 +43,12 @@ dependencies {
 	// GeckoLib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${geckolib_version}"
 	// Jade
-	modCompileOnly ('curse.maven:jade-324717:4328558') {
+	modCompileOnly ('maven.modrinth:jade:5.100.0') {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// TTF
-	modCompileOnly ("curse.maven:travelers-titles-fabric-590990:4031239"),{
-	    exclude(group: "net.fabricmc.fabric-api")
+	modCompileOnly ('maven.modrinth:travelers-titles:1.19.4-Fabric-3.3.0') {
+		exclude(group: "net.fabricmc.fabric-api")
 	}
 }
 

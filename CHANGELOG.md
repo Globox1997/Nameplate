@@ -1,6 +1,6 @@
 ### Added:
-- Added optional healthbar
+- 
 ### Fixed:
 - 
 ### Changed:
-- 
+- Updated to mc 1.20

@@ -20,9 +20,9 @@ public class NameplateServerPacket {
     public static void init() {
         ServerPlayNetworking.registerGlobalReceiver(TITLE_CS_COMPAT, (server, player, handler, buffer, sender) -> {
             server.execute(() -> {
-                SkeletonEntity skeletonEntity = EntityType.SKELETON.create(player.world);
+                SkeletonEntity skeletonEntity = EntityType.SKELETON.create(player.getWorld());
                 skeletonEntity.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), 0.0f, 0.0f);
-                MobStrengthener.changeAttributes(skeletonEntity, player.world);
+                MobStrengthener.changeAttributes(skeletonEntity, player.getWorld());
                 writeS2TravelerCompatPacket(player, NameplateTracker.getMobLevel(skeletonEntity));
                 skeletonEntity.discard();
             });

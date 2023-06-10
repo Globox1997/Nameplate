@@ -2,11 +2,13 @@ package net.nameplate.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import org.joml.Matrix4f;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
@@ -14,9 +16,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix4f;
 import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
+import net.nameplate.mixin.DrawContextAccessor;
 
 @Environment(EnvType.CLIENT)
 public class NameplateRender {
@@ -48,14 +50,12 @@ public class NameplateRender {
                     RenderSystem.enablePolygonOffset();
                     RenderSystem.polygonOffset(3.0F, 3.0F);
 
-                    RenderSystem.setShaderTexture(0, ICONS);
-
-                    DrawableHelper.drawTexture(matrices, -20, 0, 0, 0, 40, 6, 256, 256);
-
+                    MinecraftClient client = MinecraftClient.getInstance();
+                    DrawContext context = DrawContextAccessor.getDrawContext(client, matrices, client.getBufferBuilders().getEntityVertexConsumers());
+                    context.drawTexture(ICONS, -20, 0, 0, 0, 40, 6, 256, 256);
                     float health = mobEntity.getHealth() / mobEntity.getMaxHealth();
                     matrices.translate(0.0D, 0.0D, -0.01D);
-                    DrawableHelper.drawTexture(matrices, -20, 0, 0, 6, Math.round(40 * health), 6, 256, 256);
-
+                    context.drawTexture(ICONS, -20, 0, 0, 6, Math.round(40 * health), 6, 256, 256);
                     RenderSystem.polygonOffset(0.0F, 0.0F);
                     RenderSystem.disablePolygonOffset();
 
@@ -73,13 +73,13 @@ public class NameplateRender {
                 if (NameplateMain.CONFIG.showHealth) {
                     string = string + " " + Text.translatable("text.nameplate.health", Math.round(mobEntity.getHealth()), Math.round(mobEntity.getMaxHealth())).getString();
                 }
-                // string = new TranslatableText("text.nameplate.level", Math.round(mobEntity.getMaxHealth() / Nameplate.CONFIG.levelDivider)).getString() + string;
-                string = Text.translatable("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString() + string;
-
+                String levelString = Text.translatable("text.nameplate.level", ((MobEntityAccess) mobEntity).getMobRpgLevel()).getString();
+                string = levelString + " " + Text.translatable("text.nameplate.name", string).getString();
                 Text text = Text.of(string);
+
                 float h = (float) (-textRenderer.getWidth(text) / 2);
-                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.nameColor, false, matrix4f, vertexConsumers, true, j, i);
-                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.backgroundColor, false, matrix4f, vertexConsumers, false, 0, i);
+                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.nameColor, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, j, i);
+                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.backgroundColor, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, i);
                 matrices.pop();
             }
     }

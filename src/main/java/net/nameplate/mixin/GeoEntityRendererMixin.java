@@ -16,7 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.nameplate.util.NameplateRender;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 @Environment(EnvType.CLIENT)
 @Mixin(GeoEntityRenderer.class)
@@ -28,21 +28,24 @@ public abstract class GeoEntityRendererMixin<T extends LivingEntity> extends Ent
 
     @Inject(method = "render", at = @At("HEAD"), remap = false)
     private void renderMixin(T entity, float entityYaw, float partialTicks, MatrixStack stack, VertexConsumerProvider bufferIn, int packedLightIn, CallbackInfo info) {
-        if (entity instanceof MobEntity)
+        if (entity instanceof MobEntity) {
             NameplateRender.renderNameplate(this, (MobEntity) entity, stack, bufferIn, dispatcher, this.getTextRenderer(), isVisible(entity), packedLightIn);
+        }
     }
 
     @Override
     protected boolean hasLabel(T entity) {
-        if (entity instanceof MobEntity)
+        if (entity instanceof MobEntity) {
             return false;
+        }
         return super.hasLabel(entity);
     }
 
     @Inject(method = "shouldShowName", at = @At(value = "RETURN", ordinal = 1), cancellable = true, remap = false)
     private void shouldShowNameMixin(T animatable, CallbackInfoReturnable<Boolean> info) {
-        if (animatable instanceof MobEntity)
+        if (animatable instanceof MobEntity) {
             info.setReturnValue(false);
+        }
     }
 
     @Shadow(remap = false)

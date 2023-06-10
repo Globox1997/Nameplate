@@ -12,7 +12,8 @@
     "MobEntityRendererMixin",
     "GeoEntityRendererMixin",
     "GeoReplacedEntityRendererMixin",
-    "TitleRenderManagerMixin"
+    "TitleRenderManagerMixin",
+    "DrawContextAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
