@@ -29,8 +29,11 @@ public class NameplateConfig implements ConfigData {
     public double squaredDistance = 128.0D;
     @Comment("Might increase performance when true")
     public boolean showNameplateIfObstructed = false;
+    @Comment("Exclusively use rpgdifficulty level when installed")
+    public boolean useRpgDifficultyLvl = true;
     @Comment("Travelers title compat")
     public boolean levelTitle = true;
+    @Comment("Show a health bar over mobs")
     public boolean healthBar = false;
 
     @ConfigEntry.Gui.RequiresRestart

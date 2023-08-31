@@ -15,6 +15,7 @@
     "text.autoconfig.nameplate.option.nameplateSize": "Nameplate Size",
     "text.autoconfig.nameplate.option.levelTitle": "Level Title",
     "text.autoconfig.nameplate.option.healthBar": "Health Bar",
+    "text.autoconfig.nameplate.option.useRpgDifficultyLvl": "Use RpgDifficulty Lvl",
 
     "text.nameplate.health": "HP: %d/%d",
     "text.nameplate.level": "§eLv.%s",

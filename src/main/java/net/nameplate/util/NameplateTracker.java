@@ -31,9 +31,8 @@ public class NameplateTracker {
 
     public static int getMobLevel(MobEntity mobEntity) {
         int level = 1;
-        if (NameplateMain.isRpgDifficultyLoaded) {
+        if (NameplateMain.isRpgDifficultyLoaded && NameplateMain.CONFIG.useRpgDifficultyLvl) {
             level = (int) (NameplateMain.CONFIG.levelMultiplier * ((EntityAccess) mobEntity).getMobHealthMultiplier() - NameplateMain.CONFIG.levelMultiplier);
-
         } else if (DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()) != null) {
             level = (int) (NameplateMain.CONFIG.levelMultiplier * mobEntity.getAttributeBaseValue(EntityAttributes.GENERIC_MAX_HEALTH)
                     / Math.abs(DefaultAttributeRegistryAccessor.getRegistry().get(mobEntity.getType()).getBaseValue(EntityAttributes.GENERIC_MAX_HEALTH))) - NameplateMain.CONFIG.levelMultiplier + 1;
