@@ -8,6 +8,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.nameplate.NameplateMain;
 import net.nameplate.util.NameplateTracker;
 import net.rpgdifficulty.api.MobStrengthener;
 
@@ -22,7 +23,9 @@ public class NameplateServerPacket {
             server.execute(() -> {
                 SkeletonEntity skeletonEntity = EntityType.SKELETON.create(player.getWorld());
                 skeletonEntity.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), 0.0f, 0.0f);
-                MobStrengthener.changeAttributes(skeletonEntity, player.getWorld());
+                if (NameplateMain.isRpgDifficultyLoaded) {
+                    MobStrengthener.changeAttributes(skeletonEntity, player.getWorld());
+                }
                 writeS2TravelerCompatPacket(player, NameplateTracker.getMobLevel(skeletonEntity));
                 skeletonEntity.discard();
             });
