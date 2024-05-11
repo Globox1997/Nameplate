@@ -1,5 +1,6 @@
 package net.nameplate.mixin;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,11 +17,10 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory.Context;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.nameplate.util.NameplateRender;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 
 @Environment(EnvType.CLIENT)
@@ -36,9 +36,9 @@ public abstract class GeoReplacedEntityRendererMixin extends EntityRenderer {
     }
 
     @Inject(method = "actuallyRender", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/mob/MobEntity;getHoldingEntity()Lnet/minecraft/entity/Entity;"))
-    private void renderMixin(MatrixStack poseStack, GeoAnimatable animatable, BakedGeoModel model, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer,
-            boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, CallbackInfo info) {
-        NameplateRender.renderNameplate(this, (MobEntity) currentEntity, poseStack, bufferSource, dispatcher, this.getTextRenderer(), isVisible((MobEntity) currentEntity), packedLight);
+    private void renderMixin(MatrixStack poseStack, GeoAnimatable animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource,
+            @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, CallbackInfo info) {
+        NameplateRender.renderNameplate(this, (MobEntity) currentEntity, poseStack, bufferSource, dispatcher, this.getTextRenderer(), currentEntity.isInvisible(), packedLight);
     }
 
     @Inject(method = "hasLabel", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
@@ -48,8 +48,4 @@ public abstract class GeoReplacedEntityRendererMixin extends EntityRenderer {
         }
     }
 
-    @Shadow(remap = false)
-    protected boolean isVisible(LivingEntity livingEntityIn) {
-        return false;
-    }
 }

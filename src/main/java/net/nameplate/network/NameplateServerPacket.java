@@ -1,41 +1,32 @@
 package net.nameplate.network;
 
-import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SkeletonEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
 import net.nameplate.NameplateMain;
 import net.nameplate.util.NameplateTracker;
 import net.rpgdifficulty.api.MobStrengthener;
 
 public class NameplateServerPacket {
 
-    public static final Identifier SET_MOB_LEVEL = new Identifier("nameplate", "set_mob_level");
-    public static final Identifier TITLE_CS_COMPAT = new Identifier("nameplate", "title_cs_compat");
-    public static final Identifier TITLE_SC_COMPAT = new Identifier("nameplate", "title_sc_compat");
-
     public static void init() {
-        ServerPlayNetworking.registerGlobalReceiver(TITLE_CS_COMPAT, (server, player, handler, buffer, sender) -> {
-            server.execute(() -> {
-                SkeletonEntity skeletonEntity = EntityType.SKELETON.create(player.getWorld());
-                skeletonEntity.refreshPositionAndAngles(player.getX(), player.getY(), player.getZ(), 0.0f, 0.0f);
+        PayloadTypeRegistry.playS2C().register(TitlePacket.PACKET_ID, TitlePacket.PACKET_CODEC);
+        PayloadTypeRegistry.playC2S().register(TitlePacket.PACKET_ID, TitlePacket.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(LevelPacket.PACKET_ID, LevelPacket.PACKET_CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(TitlePacket.PACKET_ID, (payload, context) -> {
+            payload.level();
+            context.player().server.execute(() -> {
+                SkeletonEntity skeletonEntity = EntityType.SKELETON.create(context.player().getWorld());
+                skeletonEntity.refreshPositionAndAngles(context.player().getX(), context.player().getY(), context.player().getZ(), 0.0f, 0.0f);
                 if (NameplateMain.isRpgDifficultyLoaded) {
-                    MobStrengthener.changeAttributes(skeletonEntity, player.getWorld());
+                    MobStrengthener.changeAttributes(skeletonEntity, context.player().getWorld());
                 }
-                writeS2TravelerCompatPacket(player, NameplateTracker.getMobLevel(skeletonEntity));
+                ServerPlayNetworking.send(context.player(), new TitlePacket(NameplateTracker.getMobLevel(skeletonEntity)));
                 skeletonEntity.discard();
             });
         });
     }
 
-    public static void writeS2TravelerCompatPacket(ServerPlayerEntity serverPlayerEntity, int level) {
-        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeInt(level);
-        CustomPayloadS2CPacket packet = new CustomPayloadS2CPacket(TITLE_SC_COMPAT, buf);
-        serverPlayerEntity.networkHandler.sendPacket(packet);
-    }
 }

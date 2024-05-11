@@ -1,7 +1,6 @@
 ### Added:
-- Added rpgdiff config option
-### Fixed:
-- Fixed travelers title compat
-- Fixed waila error
-### Changed:
 - 
+### Fixed:
+- 
+### Changed:
+- Updated to mc 1.20.6

@@ -25,6 +25,7 @@ public class NameplateRender {
 
     private static final Identifier ICONS = new Identifier("nameplate:textures/icons.png");
 
+    @SuppressWarnings("resource")
     public static void renderNameplate(EntityRenderer<?> entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
             TextRenderer textRenderer, boolean isVisible, int i) {
         if (MinecraftClient.isHudEnabled() && NameplateMain.CONFIG.showLevel && dispatcher.getSquaredDistanceToCamera(mobEntity) <= NameplateMain.CONFIG.squaredDistance && !mobEntity.hasPassengers())

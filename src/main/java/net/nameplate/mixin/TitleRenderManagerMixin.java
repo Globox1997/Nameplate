@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
@@ -22,13 +23,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.nameplate.NameplateMain;
-import net.nameplate.network.NameplateClientPacket;
+import net.nameplate.network.TitlePacket;
 
 @Environment(EnvType.CLIENT)
 @Mixin(TitleRenderManager.class)
 public class TitleRenderManagerMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     @Mutable
     @Final
     public TitleRenderer<Biome> biomeTitleRenderer;
@@ -37,7 +38,7 @@ public class TitleRenderManagerMixin {
     private void updateBiomeTitleMixin(World world, BlockPos playerPos, PlayerEntity player, boolean isPlayerUnderground, CallbackInfo info, RegistryEntry<?> biomeHolder, boolean isUndergroundBiome,
             Identifier biomeBaseKey, String overrideBiomeNameKey, String normalBiomeNameKey, Text biomeTitle) {
         if (NameplateMain.CONFIG.levelTitle) {
-            NameplateClientPacket.writeC2STravelerCompatPacket();
+            ClientPlayNetworking.send(new TitlePacket(0));
         }
     }
 }
