@@ -1,4 +1,4 @@
-package net.nameplate.network;
+package net.nameplate.network.packet;
 
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 public record LevelPacket(int mobLevel, int mobId, boolean hasRpgLabel) implements CustomPayload {
 
-    public static final CustomPayload.Id<LevelPacket> PACKET_ID = new CustomPayload.Id<>(new Identifier("nameplate", "level_packet"));
+    public static final CustomPayload.Id<LevelPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of("nameplate", "level_packet"));
 
     public static final PacketCodec<RegistryByteBuf, LevelPacket> PACKET_CODEC = PacketCodec.of((value, buf) -> {
         buf.writeInt(value.mobLevel);

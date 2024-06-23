@@ -9,7 +9,7 @@ import net.nameplate.network.NameplateClientPacket;
 @Environment(EnvType.CLIENT)
 public class NameplateClient implements ClientModInitializer {
 
-    public static final Identifier MOB_LEVEL_INFO = new Identifier("nameplate", "mob_level_info");
+    public static final Identifier MOB_LEVEL_INFO = Identifier.of("nameplate", "mob_level_info");
 
     @Override
     public void onInitializeClient() {

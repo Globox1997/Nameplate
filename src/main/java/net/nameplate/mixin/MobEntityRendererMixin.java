@@ -3,7 +3,6 @@ package net.nameplate.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.fabricmc.api.Environment;
@@ -25,9 +24,10 @@ public abstract class MobEntityRendererMixin<T extends MobEntity, M extends Enti
         super(ctx, model, shadowRadius);
     }
 
-    @Inject(method = "render", at = @At("HEAD"))
-    private void renderMixin(T mobEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, CallbackInfo info) {
-        NameplateRender.renderNameplate(this, mobEntity, matrices, vertexConsumers, dispatcher, this.getTextRenderer(), this.isVisible(mobEntity), i);
+    @Override
+    public void render(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+        super.render(livingEntity, f, g, matrixStack, vertexConsumerProvider, i);
+        NameplateRender.renderNameplate(this, livingEntity, matrixStack, vertexConsumerProvider, this.dispatcher, this.getTextRenderer(), this.isVisible(livingEntity), i);
     }
 
     @Inject(method = "hasLabel", at = @At("HEAD"), cancellable = true)

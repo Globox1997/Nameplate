@@ -7,7 +7,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
-import net.nameplate.network.LevelPacket;
+import net.nameplate.network.packet.LevelPacket;
 import net.rpgdifficulty.access.EntityAccess;
 
 public class NameplateTracker {

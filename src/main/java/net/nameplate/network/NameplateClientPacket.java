@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.text.Text;
 import net.nameplate.access.MobEntityAccess;
+import net.nameplate.network.packet.LevelPacket;
+import net.nameplate.network.packet.TitlePacket;
 
 @Environment(EnvType.CLIENT)
 public class NameplateClientPacket {

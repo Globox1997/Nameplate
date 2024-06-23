@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.SkeletonEntity;
 import net.nameplate.NameplateMain;
+import net.nameplate.network.packet.LevelPacket;
+import net.nameplate.network.packet.TitlePacket;
 import net.nameplate.util.NameplateTracker;
 import net.rpgdifficulty.api.MobStrengthener;
 

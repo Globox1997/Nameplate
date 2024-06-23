@@ -23,7 +23,7 @@ import net.nameplate.mixin.DrawContextAccessor;
 @Environment(EnvType.CLIENT)
 public class NameplateRender {
 
-    private static final Identifier ICONS = new Identifier("nameplate:textures/icons.png");
+    private static final Identifier ICONS = Identifier.of("nameplate:textures/icons.png");
 
     @SuppressWarnings("resource")
     public static void renderNameplate(EntityRenderer<?> entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
@@ -36,7 +36,7 @@ public class NameplateRender {
                 matrices.push();
                 matrices.translate(0.0D, (double) mobEntity.getHeight() + NameplateMain.CONFIG.nameplateHeight, 0.0D);
                 matrices.multiply(dispatcher.getRotation());
-                matrices.scale(NameplateMain.CONFIG.nameplateSize, NameplateMain.CONFIG.nameplateSize, 0.025F);
+                matrices.scale(-NameplateMain.CONFIG.nameplateSize, NameplateMain.CONFIG.nameplateSize, -0.025F);
 
                 if (NameplateMain.CONFIG.healthBar) {
                     matrices.push();

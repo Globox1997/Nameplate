@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.nameplate.NameplateMain;
-import net.nameplate.network.TitlePacket;
+import net.nameplate.network.packet.TitlePacket;
 
 @Environment(EnvType.CLIENT)
 @Mixin(TitleRenderManager.class)
@@ -34,7 +34,7 @@ public class TitleRenderManagerMixin {
     @Final
     public TitleRenderer<Biome> biomeTitleRenderer;
 
-    @Inject(method = "updateBiomeTitle", at = @At(value = "INVOKE", target = "Lcom/yungnickyoung/minecraft/travelerstitles/render/TitleRenderer;addRecentEntry(Ljava/lang/Object;)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "updateBiomeTitle", at = @At(value = "INVOKE", target = "Lcom/yungnickyoung/minecraft/travelerstitles/render/TitleRenderer;addRecentEntry(Ljava/lang/Object;)V"), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
     private void updateBiomeTitleMixin(World world, BlockPos playerPos, PlayerEntity player, boolean isPlayerUnderground, CallbackInfo info, RegistryEntry<?> biomeHolder, boolean isUndergroundBiome,
             Identifier biomeBaseKey, String overrideBiomeNameKey, String normalBiomeNameKey, Text biomeTitle) {
         if (NameplateMain.CONFIG.levelTitle) {
