@@ -79,7 +79,7 @@ public class NameplateRender {
                 Text text = Text.of(string);
 
                 float h = (float) (-textRenderer.getWidth(text) / 2);
-                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.nameColor, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, j, i);
+                textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.nameColor, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.SEE_THROUGH, j, i);
                 textRenderer.draw(text, h, 0.0F, NameplateMain.CONFIG.backgroundColor, false, matrix4f, vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, i);
                 matrices.pop();
             }
