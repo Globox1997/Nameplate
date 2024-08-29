@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -38,9 +38,9 @@ dependencies {
 	// Wthit
     modCompileOnly ("mcp.mobius.waila:wthit-api:fabric-${wthit_version}")
 	// GeckoLib
-	modImplementation "software.bernie.geckolib:geckolib-fabric-${geckolib_version}"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
 	// Jade
-	modCompileOnly ('maven.modrinth:jade:14.2.0+fabric') {
+	modCompileOnly ('maven.modrinth:jade:15.2.1+fabric') {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// TTF
