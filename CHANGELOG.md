@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed geckolib compat
 ### Changed:
-- Updated to mc 1.21
+- 

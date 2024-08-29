@@ -35,10 +35,9 @@ public abstract class GeoReplacedEntityRendererMixin extends EntityRenderer {
         super(ctx);
     }
 
-    @Inject(method = "actuallyRender", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/mob/MobEntity;getHoldingEntity()Lnet/minecraft/entity/Entity;"))
-    private void renderMixin(MatrixStack poseStack, GeoAnimatable animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource,
-            @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha, CallbackInfo info) {
-        NameplateRender.renderNameplate(this, (MobEntity) currentEntity, poseStack, bufferSource, dispatcher, this.getTextRenderer(), currentEntity.isInvisible(), packedLight);
+    @Inject(method = "actuallyRender", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/mob/MobEntity;getLeashHolder()Lnet/minecraft/entity/Entity;"))
+    private void actuallyRenderMixin(MatrixStack poseStack, GeoAnimatable animatable, BakedGeoModel model, @Nullable RenderLayer renderType, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour, CallbackInfo info) {
+        NameplateRender.renderNameplate(this, (MobEntity) currentEntity, poseStack, bufferSource, dispatcher, this.getTextRenderer(), !currentEntity.isInvisible(), packedLight);
     }
 
     @Inject(method = "hasLabel", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
