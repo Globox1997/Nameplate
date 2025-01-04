@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- Fixed geckolib compat
-### Changed:
 - 
+### Changed:
+- Updated rpgdifficulty compat

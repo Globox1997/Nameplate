@@ -23,7 +23,7 @@ public class NameplateServerPacket {
                 SkeletonEntity skeletonEntity = EntityType.SKELETON.create(context.player().getWorld());
                 skeletonEntity.refreshPositionAndAngles(context.player().getX(), context.player().getY(), context.player().getZ(), 0.0f, 0.0f);
                 if (NameplateMain.isRpgDifficultyLoaded) {
-                    MobStrengthener.changeAttributes(skeletonEntity, context.player().getWorld());
+                    MobStrengthener.changeAttributes(skeletonEntity, context.player().getServerWorld(), null, false);
                 }
                 ServerPlayNetworking.send(context.player(), new TitlePacket(NameplateTracker.getMobLevel(skeletonEntity)));
                 skeletonEntity.discard();
