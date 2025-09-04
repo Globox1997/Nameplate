@@ -25,7 +25,6 @@ public class NameplateConfig implements ConfigData {
     public boolean showHealth = false;
     @Comment("Setting if for example WTHIT is installed")
     public boolean showLevel = true;
-    public boolean showHostileOnly = false;
     public double squaredDistance = 128.0D;
     @Comment("Might increase performance when true")
     public boolean showNameplateIfObstructed = false;

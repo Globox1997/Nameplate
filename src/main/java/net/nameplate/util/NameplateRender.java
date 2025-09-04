@@ -1,9 +1,6 @@
 package net.nameplate.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import org.joml.Matrix4f;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -19,15 +16,15 @@ import net.minecraft.util.Identifier;
 import net.nameplate.NameplateMain;
 import net.nameplate.access.MobEntityAccess;
 import net.nameplate.mixin.DrawContextAccessor;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class NameplateRender {
 
     private static final Identifier ICONS = Identifier.of("nameplate:textures/icons.png");
 
-    @SuppressWarnings("resource")
     public static void renderNameplate(EntityRenderer<?> entityRenderer, MobEntity mobEntity, MatrixStack matrices, VertexConsumerProvider vertexConsumers, EntityRenderDispatcher dispatcher,
-            TextRenderer textRenderer, boolean isVisible, int i) {
+                                       TextRenderer textRenderer, boolean isVisible, int i) {
         if (MinecraftClient.isHudEnabled() && NameplateMain.CONFIG.showLevel && dispatcher.getSquaredDistanceToCamera(mobEntity) <= NameplateMain.CONFIG.squaredDistance && !mobEntity.hasPassengers())
             if (isVisible && ((MobEntityAccess) mobEntity).showMobRpgLabel()) {
                 if (!NameplateMain.CONFIG.showNameplateIfObstructed && !MinecraftClient.getInstance().player.canSee(mobEntity)) {
